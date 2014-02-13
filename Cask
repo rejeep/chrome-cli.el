@@ -3,5 +3,6 @@
 (package-file "chrome-cli.el")
 
 (development
- (depends-on "el-mock")
+ (depends-on "shut-up")
+ (depends-on "commander")
  (depends-on "ert-runner"))

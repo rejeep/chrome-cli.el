@@ -1,0 +1,3 @@
+#!/bin/bash
+
+${CASK:-cask} exec ${EMACS:-emacs} -Q --script $(dirname $0)/chrome-cli.el -- $@

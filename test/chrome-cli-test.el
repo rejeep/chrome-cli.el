@@ -1,7 +1,15 @@
 (ert-deftest chrome-cli-windows-test ()
-  (with-mock
-   (stub chrome-cli--command =>
-         '("[1641] Tuxicity - Blog" "[38] rejeep/chrome-cli.el"))
-   (should (equal (chrome-cli-windows)
-                  '((:id "38" :name "rejeep/chrome-cli.el")
-                    (:id "1641" :name "Tuxicity - Blog"))))))
+  (should (-same-items? (chrome-cli-windows)
+                        '((:id "38"   :name "rejeep/chrome-cli.el")
+                          (:id "1641" :name "Tuxicity - Blog")))))
+
+(ert-deftest chrome-cli-tabs-test/no-window ()
+  (should (-same-items? (chrome-cli-tabs)
+                        '((:id "1642" :title "Tuxicity - Blog"       :url "http://tuxicity.se/")
+                          (:id "1813" :title "rejeep/chrome-cli.el"  :url "https://github.com/rejeep/chrome-cli.el")
+                          (:id "1895" :title "prasmussen/chrome-cli" :url "https://github.com/prasmussen/chrome-cli")))))
+
+(ert-deftest chrome-cli-tabs-test/window ()
+  (should (-same-items? (chrome-cli-tabs "38")
+                        '((:id "1813" :title "rejeep/chrome-cli.el"  :url "https://github.com/rejeep/chrome-cli.el")
+                          (:id "1895" :title "prasmussen/chrome-cli" :url "https://github.com/prasmussen/chrome-cli")))))
