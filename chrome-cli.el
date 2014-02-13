@@ -31,6 +31,21 @@
 
 ;;; Code:
 
+(defvar chrome-cli-executable nil
+  "Path to chrome-cli executable.")
+
+(defun chrome-cli--command (&rest args)
+  "Run chrome-cli command with ARGS.
+
+Return value is a list with each row in the result as an item in
+the list."
+  (with-temp-buffer
+    (let* ((chrome-cli (executable-find (or chrome-cli-executable "chrome-cli")))
+           (exit-code (apply 'call-process (append (list chrome-cli nil t nil) args))))
+      (if (= exit-code 0)
+          (s-lines (s-trim (buffer-string)))
+        (error "Something went wrong: %s" (buffer-string))))))
+
 (provide 'chrome-cli)
 
 ;;; chrome-cli.el ends here
