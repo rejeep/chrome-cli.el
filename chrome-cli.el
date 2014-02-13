@@ -46,6 +46,20 @@ the list."
           (s-lines (s-trim (buffer-string)))
         (error "Something went wrong: %s" (buffer-string))))))
 
+(defun chrome-cli-windows ()
+  "Return list of windows.
+
+Each item in the list is a plist with id and name."
+  (let (windows)
+    (-each (chrome-cli--command "list" "windows")
+      (lambda (line)
+        (let ((matches (s-match "\\[\\([0-9]+\\)\\] \\(.+\\)" line)))
+          (push
+           (list :id (nth 1 matches)
+                 :name (nth 2 matches))
+           windows))))
+    windows))
+
 (provide 'chrome-cli)
 
 ;;; chrome-cli.el ends here
