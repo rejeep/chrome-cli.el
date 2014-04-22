@@ -1,5 +1,7 @@
 # Chrome CLI for Emacs
 
+WIP
+
 This package provides an Emacs interface for
 [chrome-cli](https://github.com/prasmussen/chrome-cli).
 
